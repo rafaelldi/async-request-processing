@@ -27,7 +27,7 @@ namespace async_request_processing
         {
             var response =
                 await _processRequestClient.GetResponse<RequestAccepted>(new ProcessRequestCommand(request.Id, request.Items));
-            return Ok(response.Message.RequestId);
+            return Accepted(response.Message.RequestId);
         }
 
         [HttpGet("{id:guid}/status")]
