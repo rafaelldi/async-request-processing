@@ -2,16 +2,18 @@ POST http://localhost:5000/requests
 Content-Type: application/json
 
 {
-  "id": "B41DEB0B-D088-458C-9241-53375B12117D",
+  "id": "{{$uuid}}",
   "items": [
-    "BF1FAE17-070A-473D-9866-C20E594A4CB1",
-    "8668F382-25B2-4C08-AB02-84B99F9BBCB6",
-    "CD4272C9-C158-4F8F-91C5-CDC62581A4B0",
-    "7BA09AB9-43A2-4B45-AA88-36860186CA38",
-    "74A7C363-AF80-4EA6-83BF-CD415ADD7F0C"
+    "{{$uuid}}",
+    "{{$uuid}}",
+    "{{$uuid}}",
+    "{{$uuid}}",
+    "{{$uuid}}"
   ]
 }
 
+> {% client.global.set("request_id", response.body.toString()); %}
+
 ###
 
-GET http://localhost:5000/requests/B41DEB0B-D088-458C-9241-53375B12117D/status
+GET http://localhost:5000/requests/{{request_id}}/status

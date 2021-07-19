@@ -1,4 +1,5 @@
 using async_request_processing.Activity;
+using async_request_processing.EventCounters;
 using async_request_processing.StateMachine;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -24,7 +25,12 @@ namespace async_request_processing
                     x.AddRequestClient<ProcessRequestCommand>();
                     x.AddRequestClient<RequestStatusQuery>();
 
-                    x.UsingRabbitMq((context, cfg) => { cfg.ConfigureEndpoints(context); });
+                    x.UsingRabbitMq((context, cfg) =>
+                    {
+                        cfg.UseExecuteActivityFilter(typeof(EventCountersFilter<>), context);
+
+                        cfg.ConfigureEndpoints(context);
+                    });
                 })
                 .AddMassTransitHostedService();
         }
